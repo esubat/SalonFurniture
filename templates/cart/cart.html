@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Cart</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="cart-page">
+
+    <h3>Your Cart</h3> 
+{% for item in cart %}
+{% with product=item.product %}
+
+<div class="cart-container">
+    <img src="{{ product.image.url }}" alt="">
+    <h4 class="name">{{ product.name }}</h4>
+    <br>
+    <div class="update-delete-forms">
+        <form class="update-form" action="{% url 'cart:cart_add' product.id %}" method="post">
+        {{ item.update_quantity_form.quantity }}
+        {{ item.update_quantity_form.override }}
+        <input class="update" type="submit" value="Update">
+        {% csrf_token %}
+        </form>
+        
+        <form  class="remove-form"  action="{% url 'cart:cart_remove' product.id %}" method="post">
+            <input class="remove" type="submit" value="Remove">
+            {% csrf_token %}
+        </form>
+        
+    </div>
+    <p>{{ item.price }}</p>
+        <p> <b>Subtotal:</b> {{ item.total_price}}</p>
+
+</div>
+    {% endwith %}
+    {% endfor %}
+    <br>
+
+
+    <div class="checkout-class">
+
+        <div class="total_price"> <p> <strong>  Total Price : ETB {{ cart.get_total_price }} </strong> </p></div>
+        <div class="checkout_element">
+         <a href="#" class="button" id="checkout" >Checkout</a>
+        <a class="button"  href="{% url 'furniture:all-products' %}" >Continue shopping</a>
+        </div>
+
+    </div>
+  
+
+</div>
+
+{% endblock %}

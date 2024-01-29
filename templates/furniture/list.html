@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+ <title> Salon Furniture </title> 
+ {% endblock title %}
+
+ {% block sidebar %}
+ <div class="sidebar">
+   {% for category in categories %}
+    <a href="">{{ category.title }}</a>
+   {% endfor %}
+ </div>
+ {% endblock sidebar %}
+
+{% block content %}
+  <h1> All products </h1>
+  {% for product in products %}
+  
+  <div class="product-container">
+    <div class="product-item">
+  <a href="{{ product.get_absolute_url }}">
+    <img  src=" {% if product.image %}{{ product.image.url }} {% else %} {{ 'static/image/noimage.png' }} {% endif %}" alt="img"  >
+  </a>
+  <p> {{ product.name }} <p>
+  <p> ETB {{ product.price}} <p></p>
+  </div>
+  </div>
+  {% endfor %}
+
+{% endblock %}
+
+
